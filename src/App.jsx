@@ -1,36 +1,19 @@
-import React, { useState, useEffect, useCallback } from 'react'
-
-function Child({ callback }) {
-  useEffect(() => {
-    callback()
-  }, [callback])
-
-  return (
-    <div>
-      <span>Child</span>
-    </div>
-  )
-}
+import React, { useState, useEffect } from 'react'
 
 function App() {
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [address, setAddress] = useState('')
+  // 函数组件 App 在每一次渲染都会被调用，每一次调用都会形成一个独立上下文
+  const [count, setCount] = useState(0)
 
-  // const cb = () => {
-  //   console.log('cb is called')
-  // }
-
-  const cb = useCallback(() => {
-    console.log('cb is called')
-  }, [])
+  const handleClick = () => {
+    setTimeout(() => {
+      console.log('count', count)
+    }, 3000)
+  }
 
   return (
     <div className="App">
-      <input type="text" onChange={e => setName(e.target.value)} placeholder='请输入名字' />
-      <input type="text" onChange={e => setPhone(e.target.value)} placeholder='请输入电话' />
-      <input type="text" onChange={e => setAddress(e.target.value)} placeholder='请输入地址' />
-      <Child callback={cb} />
+      <button onClick={() => setCount(count + 1)}>Click {count} times</button>
+      <button onClick={handleClick}>Show count</button>
     </div>
   )
 }
