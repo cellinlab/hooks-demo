@@ -1,21 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
-function App() {
-  // 函数组件 App 在每一次渲染都会被调用，每一次调用都会形成一个独立上下文
-  const [count, setCount] = useState(0)
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      count: 0,
+    }
+  }
 
-  const handleClick = () => {
+  componentDidUpdate() {
     setTimeout(() => {
-      console.log('count', count)
+      console.log('count', this.state.count)
     }, 3000)
   }
 
-  return (
-    <div className="App">
-      <button onClick={() => setCount(count + 1)}>Click {count} times</button>
-      <button onClick={handleClick}>Show count</button>
-    </div>
-  )
+  render() {
+    return (
+      <div>
+        <button onClick={() => this.setState({ count: this.state.count + 1 })}>
+          Click {this.state.count} times
+        </button>
+      </div>
+    )
+  }
 }
 
 export default App
