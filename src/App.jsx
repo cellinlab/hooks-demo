@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 
-function Child({ data }) {
+function Child({ callback }) {
   useEffect(() => {
-    console.log('Child useEffect data', data)
-  }, [data])
+    callback()
+  }, [callback])
 
   return (
     <div>
@@ -17,20 +17,20 @@ function App() {
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
 
-  // 把父组件需要传递的参数做标记，父组件其他状态更新，不影响传递给子组件的对象
-  const data = useMemo(() => {
-    return {
-      name,
-      phone,
-    }
-  }, [name, phone])
+  // const cb = () => {
+  //   console.log('cb is called')
+  // }
+
+  const cb = useCallback(() => {
+    console.log('cb is called')
+  }, [])
 
   return (
     <div className="App">
       <input type="text" onChange={e => setName(e.target.value)} placeholder='请输入名字' />
       <input type="text" onChange={e => setPhone(e.target.value)} placeholder='请输入电话' />
       <input type="text" onChange={e => setAddress(e.target.value)} placeholder='请输入地址' />
-      <Child data={data} />
+      <Child callback={cb} />
     </div>
   )
 }
